@@ -1,27 +1,29 @@
 package test;
 
-import com.bring.context.AnnotationConfigApplicationContext;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.bring.BringApplication;
+import com.bring.context.BringApplicationContext;
+import data.client.RestClient;
 import data.configuration.TestConfiguration;
-import data.service.NasaService;
+import data.service.BringService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ConfigurationTest {
     
-    @DisplayName("All beans from configuration class registered in Application Context")
+    @DisplayName("All beans from configuration class registered in Bring Context")
     @Test
     void testConfigurationBeansRegistration() {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(TestConfiguration.class);
-        context.register();
-
-        NasaService nasaService = context.getBean(NasaService.class);
+        BringApplication bringApplication = new BringApplication(TestConfiguration.class);
+        BringApplicationContext bringApplicationContext = bringApplication.run();
         
-        assertThat(nasaService).isNotNull();
-        assertThat(nasaService.getNasaRestClient()).isNotNull();
-        assertThat(nasaService.getNasaRestClient().getKey()).isNotEmpty();
-        assertThat(nasaService.getNasaRestClient().getUrl()).isNotEmpty();
+        RestClient restClient = bringApplicationContext.getBean(RestClient.class);
+        BringService bringService = bringApplicationContext.getBean(BringService.class);
+        
+        assertThat(restClient).isNotNull();
+        assertThat(bringService).isNotNull();
+        assertThat(bringService.getBringRestClient()).isEqualTo(restClient);
     }
     
 }

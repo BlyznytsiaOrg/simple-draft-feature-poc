@@ -1,10 +1,9 @@
 package com.bring.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.Builder;
 import lombok.Getter;
+
+import java.lang.reflect.Method;
 
 @Getter
 @Builder
@@ -14,8 +13,12 @@ public class BeanDefinition {
     
     private BeanTypeEnum beanType;
     
-    private List<String> dependencies = new ArrayList<>();
+    private boolean isSingleton;
     
-    private Object source;
+    private Method method;
+    
+    private String factoryMethodName;
+    
+    private String factoryBeanName;
     
 }

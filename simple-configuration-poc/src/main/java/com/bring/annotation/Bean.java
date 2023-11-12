@@ -16,12 +16,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Bean {
-
-    /**
-     * Used to set a name for a Bean. Example: {@code @Bean("restClient")}
-     * 
-     * @since 1.0
-     */
-    String name() default "";
-    
 }

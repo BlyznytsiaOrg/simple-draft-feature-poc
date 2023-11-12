@@ -4,4 +4,6 @@ public interface BringApplicationContext {
     
     void refresh();
     
+    <T> T getBean(Class<T> clazz);
+    
 }
